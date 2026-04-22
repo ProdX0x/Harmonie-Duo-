@@ -158,6 +158,21 @@ export const SessionPlayer = ({ stretchIds, onComplete, onClose, routineName }: 
               <p className="text-slate-400 text-sm leading-relaxed">{currentStretch.partnerRoleB}</p>
             </div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="max-w-md mx-auto p-4 bg-teal-500/5 rounded-2xl border border-teal-500/10 flex items-start gap-4 text-left"
+          >
+            <div className="mt-1 w-5 h-5 bg-teal-500/10 rounded-full flex items-center justify-center text-teal-400 shrink-0">
+               <span className="text-[10px] font-bold">!</span>
+            </div>
+            <p className="text-[11px] text-teal-200/60 leading-relaxed italic">
+              <span className="font-bold text-teal-400 not-italic uppercase tracking-tighter mr-2">Fun Fact :</span>
+              {currentStretch.funFact}
+            </p>
+          </motion.div>
         </motion.div>
       </div>
 

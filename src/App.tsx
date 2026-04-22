@@ -22,6 +22,7 @@ import { STRETCHES, MORNING_ROUTINE, EVENING_ROUTINE, Stretch } from './data/str
 import { BodyMap } from './components/BodyMap';
 import { DuoCalendar } from './components/Calendar';
 import { SessionPlayer } from './components/SessionPlayer';
+import { StretchDetail } from './components/StretchDetail';
 
 type View = 'dashboard' | 'explore' | 'routines' | 'settings';
 
@@ -29,6 +30,7 @@ export default function App() {
   const [currentView, setCurrentView] = useState<View>('dashboard');
   const [selectedZone, setSelectedZone] = useState<Stretch['zone'] | null>(null);
   const [activeRoutine, setActiveRoutine] = useState<{ ids: string[]; name: string } | null>(null);
+  const [selectedStretchId, setSelectedStretchId] = useState<string | null>(null);
   const [scheduledSessions, setScheduledSessions] = useState<Record<string, { morning: boolean; evening: boolean }>>({
      [`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`]: { morning: true, evening: false }
   });
@@ -165,7 +167,8 @@ export default function App() {
                     <motion.div
                       layout
                       key={stretch.id}
-                      className="group bg-white/5 p-4 rounded-3xl border border-white/5 flex items-center justify-between transition-all hover:bg-white/10 hover:border-white/10 hover:translate-x-1"
+                      onClick={() => setSelectedStretchId(stretch.id)}
+                      className="group bg-white/5 p-4 rounded-3xl border border-white/5 flex items-center justify-between transition-all hover:bg-white/10 hover:border-white/10 hover:translate-x-1 cursor-pointer"
                     >
                       <div className="flex items-center gap-4">
                          <div className="w-14 h-14 bg-white/5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-teal-500/30 transition-all">
@@ -176,7 +179,7 @@ export default function App() {
                               referrerPolicy="no-referrer"
                             />
                          </div>
-                         <div>
+                         <div className="text-left">
                             <h4 className="font-medium text-slate-200 group-hover:text-white transition-colors">{stretch.exerciseName}</h4>
                             <div className="flex items-center gap-2 mt-1">
                               <span className="text-[9px] text-slate-500 uppercase tracking-widest leading-none">{stretch.muscle}</span>
@@ -186,7 +189,10 @@ export default function App() {
                          </div>
                       </div>
                       <button
-                        onClick={() => setActiveRoutine({ ids: [stretch.id], name: stretch.exerciseName })}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveRoutine({ ids: [stretch.id], name: stretch.exerciseName });
+                        }}
                         className="w-10 h-10 bg-teal-500 text-dark-bg rounded-full flex items-center justify-center hover:bg-teal-400 transition-all shadow-lg shadow-teal-500/10"
                       >
                          <Play size={14} fill="currentColor" />
@@ -239,6 +245,23 @@ export default function App() {
             routineName={activeRoutine.name}
             onClose={() => setActiveRoutine(null)}
             onComplete={() => {}}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Stretch Detail Modal */}
+      <AnimatePresence>
+        {selectedStretchId && (
+          <StretchDetail
+            stretch={STRETCHES.find(s => s.id === selectedStretchId)!}
+            onClose={() => setSelectedStretchId(null)}
+            onStart={() => {
+              const stretch = STRETCHES.find(s => s.id === selectedStretchId);
+              if (stretch) {
+                setActiveRoutine({ ids: [stretch.id], name: stretch.exerciseName });
+                setSelectedStretchId(null);
+              }
+            }}
           />
         )}
       </AnimatePresence>
