@@ -165,22 +165,31 @@ export default function App() {
                     <motion.div
                       layout
                       key={stretch.id}
-                      className="group bg-white/5 p-4 rounded-2xl border border-white/5 flex items-center justify-between transition-all hover:bg-white/10"
+                      className="group bg-white/5 p-4 rounded-3xl border border-white/5 flex items-center justify-between transition-all hover:bg-white/10 hover:border-white/10 hover:translate-x-1"
                     >
                       <div className="flex items-center gap-4">
-                         <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-teal-400/40 group-hover:text-teal-400 transition-colors">
-                            <Accessibility className="w-5 h-5" />
+                         <div className="w-14 h-14 bg-white/5 rounded-2xl overflow-hidden border border-white/10 group-hover:border-teal-500/30 transition-all">
+                            <img 
+                              src={stretch.image} 
+                              alt="" 
+                              className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity"
+                              referrerPolicy="no-referrer"
+                            />
                          </div>
                          <div>
                             <h4 className="font-medium text-slate-200 group-hover:text-white transition-colors">{stretch.exerciseName}</h4>
-                            <p className="text-[10px] text-slate-500 uppercase tracking-widest">{stretch.muscle}</p>
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="text-[9px] text-slate-500 uppercase tracking-widest leading-none">{stretch.muscle}</span>
+                              <span className={`w-1 h-1 rounded-full ${stretch.intensity === 'high' ? 'bg-rose-500' : stretch.intensity === 'medium' ? 'bg-orange-400' : 'bg-teal-500'}`}></span>
+                              <span className="text-[9px] text-slate-600 uppercase tracking-widest leading-none">{stretch.duration}s</span>
+                            </div>
                          </div>
                       </div>
                       <button
                         onClick={() => setActiveRoutine({ ids: [stretch.id], name: stretch.exerciseName })}
-                        className="w-10 h-10 bg-teal-500/10 text-teal-400 rounded-full flex items-center justify-center hover:bg-teal-500 hover:text-dark-bg transition-all"
+                        className="w-10 h-10 bg-teal-500 text-dark-bg rounded-full flex items-center justify-center hover:bg-teal-400 transition-all shadow-lg shadow-teal-500/10"
                       >
-                         <Play size={16} fill="currentColor" />
+                         <Play size={14} fill="currentColor" />
                       </button>
                     </motion.div>
                   ))}

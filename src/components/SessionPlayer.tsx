@@ -110,11 +110,19 @@ export const SessionPlayer = ({ stretchIds, onComplete, onClose, routineName }: 
           className="w-full max-w-2xl text-center"
         >
           {/* Exercise Illustration */}
-          <div className="w-full aspect-video bg-[#141417] rounded-3xl mb-10 flex items-center justify-center border border-white/5 overflow-hidden shadow-2xl relative">
-             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(20,184,166,0.05),_transparent)]"></div>
-             <div className="relative w-full h-full p-8">
-                <svg viewBox="0 0 200 120" className="w-full h-full stroke-teal-500 drop-shadow-[0_0_15px_rgba(20,184,166,0.15)]" fill="none" strokeWidth="1.2" strokeLinecap="round">
-                   {/* Person A Abstract */}
+          <div className="w-full aspect-video bg-[#141417] rounded-3xl mb-10 flex items-center justify-center border border-white/5 overflow-hidden shadow-2xl relative group">
+             <img 
+               src={currentStretch.image} 
+               alt={currentStretch.exerciseName}
+               className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity duration-700"
+               referrerPolicy="no-referrer"
+             />
+             <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent"></div>
+             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(20,184,166,0.1),_transparent)]"></div>
+             
+             <div className="relative w-full h-full p-8 flex items-center justify-center">
+                <svg viewBox="0 0 200 120" className="w-full h-full stroke-teal-500/80 drop-shadow-[0_0_15px_rgba(20,184,166,0.3)]" fill="none" strokeWidth="1.2" strokeLinecap="round">
+                   {/* Person A Abstract Layered on top of image for style */}
                    <circle cx="80" cy="40" r="10" />
                    <path d="M80 50 L80 80 L60 110 M80 80 L100 110" />
                    <path d="M80 60 L100 70" />
@@ -125,6 +133,7 @@ export const SessionPlayer = ({ stretchIds, onComplete, onClose, routineName }: 
                    <path d="M120 60 L100 70" strokeOpacity="0.4" />
                 </svg>
              </div>
+             
              <div className="absolute bottom-4 right-6 flex items-center gap-1">
                 {stretchIds.map((_, idx) => (
                   <div key={idx} className={`h-1 rounded-full transition-all ${idx === currentIndex ? 'w-6 bg-teal-500' : 'w-2 bg-white/10'}`}></div>

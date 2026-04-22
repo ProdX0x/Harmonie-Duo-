@@ -62,8 +62,8 @@ export const DuoCalendar = ({ onScheduleSelect, scheduledSessions }: CalendarPro
       </div>
 
       <div className="grid grid-cols-7 gap-2 mb-2">
-        {['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((day) => (
-          <div key={day} className="text-center text-[10px] font-bold text-slate-600 uppercase tracking-widest">
+        {['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((day, index) => (
+          <div key={`${day}-${index}`} className="text-center text-[10px] font-bold text-slate-600 uppercase tracking-widest">
             {day}
           </div>
         ))}
